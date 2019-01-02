@@ -1,0 +1,196 @@
+<div [hidden]='techError'>
+    <form #addProjectForm = "ngForm" method="post" (ngSubmit)="addProject(project)" novalidate>
+		<div class="row margin-top-10" [class.hasError]="projectName.errors && (projectName.dirty || projectName.touched)">
+			<div class="col-md-2 col-sm-12 col-xs-12">
+				<label for="projectName" class="control-label label-font">Project:</label>
+			</div>
+			<div class="col-md-7 col-sm-12 col-xs-12" >
+				<input #projectName="ngModel" [(ngModel)]="project.project" name="projectName" id ="projectName" class="form-control" type="text" pattern = "^[a-zA-Z\s]+$" required aria-describedby="projectNameErrorDiv">
+				<div role="alert" aria-live="assertive" id="projectNameErrorDiv" class="error-message-cmn-cls" *ngIf="projectName.errors && (projectName.dirty || projectName.touched)">
+					<span class="fa fa-times"> </span>
+					<span class="error-msg" *ngIf="projectName.errors.required">Required field</span>
+					<span class="error-msg" *ngIf="projectName.errors.pattern">Please enter only characters.</span>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-12 col-xs-12"></div>
+		</div>
+
+		<div class="row margin-top-10">
+			<div class="col-md-2 col-sm-12 col-xs-12"></div>			
+			<div class="col-md-10 col-sm-12 col-xs-12 margin-left-20">
+				<div class="row">
+					<div class="col-md-3 col-sm-12 col-xs-12">
+						<label class="form-check-label">
+							<input #isSetDate="ngModel" [(ngModel)]="project.isSetDate" name="isSetDate" id ="isSetDate" type="checkbox" class="form-check-input" value="" (click)=setStartEndDt()>Set Start and End Date
+						</label>
+					</div>
+					<div class="col-md-8 col-sm-12 col-xs-12">
+						<div class="row">
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input #projStartDate="ngModel" [(ngModel)]="project.startDate" name="startDate" id ="startDate" class="form-control" type="date" min="{{minDate | date:'yyyy-MM-dd'}}" required placeholder="Start Date" [disabled]="!project.isSetDate">
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<input #projEndDate="ngModel" [(ngModel)]="project.endDate" name="endDate" id ="endDate" class="form-control" type="date" min="{{minDate | date:'yyyy-MM-dd'}}" required placeholder="End Date" [disabled]="!project.isSetDate">
+							</div>
+						</div>						
+					</div>
+					<div class="col-md-1 col-sm-12 col-xs-12"></div>
+				</div>			
+			</div>		
+			
+		</div>
+
+		<div class="row margin-top-10">
+			<div class="col-md-2 col-sm-12 col-xs-12">
+				<label for="priority" class="control-label label-font">Priority:</label>     
+			</div>
+			<div class="col-md-7 col-sm-12 col-xs-12">
+				{{project.priority}} <input type="range" [(ngModel)]="project.priority" id="priority" name="priority" min="0" max="30" class="slider">
+			</div>
+			<div class="col-md-3 col-sm-12 col-xs-12"></div>
+		</div>
+
+		<div class="row margin-top-10">
+			<div class="col-md-2 col-sm-12 col-xs-12">
+				<label for="manager" class="control-label label-font">Manager:</label>
+			</div>			
+			<div class="col-md-5 col-sm-12 col-xs-12">
+				<input #manager="ngModel" [(ngModel)]="selectedUserName" name="manager" id ="manager" class="margin-bottom-10 form-control" type="text" pattern="^[0-9]$" required readonly/>
+			</div>
+			<div class="col-md-2 col-sm-12 col-xs-12 padding-right-neutralize">
+				<button type="button" class="btn btn-default" (click)="getManager()">Search</button>
+			</div>			
+			<div class="col-md-3 col-sm-12 col-xs-12"></div>
+		</div>
+
+		<div class="row margin-top-10">
+			<div class="col-md-2 col-sm-12 col-xs-12"></div>
+			<div class="col-md-7 col-sm-12 col-xs-12 text-align-right">
+				<button type="submit" class="btn btn-primary margin-right-15" [hidden]="!isAdd">Add</button>
+				<button type="submit" class="btn btn-primary margin-right-15" [hidden]="isAdd">Update</button>
+				<button type="button" class="btn btn-default" (click)="reset()">Reset</button>
+			</div>
+			<div class="col-md-3 col-sm-12 col-xs-12"></div>
+		</div>
+		<div class="row margin-top-10 *ngIf='isError'">
+			<div class="col-md-2 col-sm-12 col-xs-12"></div>
+			<div class="col-md-6 col-sm-12 col-xs-12 error-msg">
+				{{errorMessage}}
+			</div>
+			<div class="col-md-4 col-sm-12 col-xs-12"></div>
+		</div>
+	</form>
+	<div class="row margin-top-5">
+		<div class="col-md-1 col-sm-12 col-xs-12"></div>
+		<div class="col-md-8 col-sm-12 col-xs-12">
+			<hr/>
+		</div>
+		<div class="col-md-3 col-sm-12 col-xs-12"></div>
+	</div>
+	
+	<div class="row margin-top-5">
+		<div class="col-md-1 col-sm-12 col-xs-12"></div>
+		<div class="col-md-8 col-sm-12 col-xs-12">
+			<input #searchProjData="ngModel" [(ngModel)]="searchText" name="searchText" id ="searchText" class="form-control" type="text" pattern = "^[a-zA-Z\s]+$" required placeholder="Search..."/>
+		</div>
+		<div class="col-md-3 col-sm-12 col-xs-12"></div>
+	</div>
+
+	<div class="row margin-top-15">
+		<div class="col-md-1 col-sm-12 col-xs-12"></div>
+		<div class="col-md-8 col-sm-12 col-xs-12">
+			<div class="row">
+				<div class="col-md-2 col-sm-12 col-xs-12">
+					<label for="sortProject" class="control-label label-font">Sort By:</label>
+				</div>
+				<div class="col-md-10 col-sm-12 col-xs-12">
+					<button type="button" class="btn margin-bottom-10 mx-1" (click)="sortProject('startDate')">Start Date</button>
+					<button type="button" class="btn margin-bottom-10 mx-1" (click)="sortProject('endDate')">End Date</button>
+					<button type="button" class="btn margin-bottom-10 mx-1" (click)="sortProject('priority')">Priority</button>
+					<button type="button" class="btn margin-bottom-10 mx-1" (click)="sortProject('noOfCompletedTask')">Completed</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-3 col-sm-12 col-xs-12"></div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-1 col-sm-12 col-xs-12"></div>
+		<div class="col-md-8 col-sm-12 col-xs-12">
+			<ul class="list-group" *ngIf='null != projectList'>
+				<li *ngFor="let proj of projectList | searchFilter : searchText : 'projectDetails' | sortFilter : fieldName : 'projectScreen'" class="list-group-item borderless">
+					<div class="row">
+						<div class="col-md-7 col-sm-12 col-xs-12 project-details-div margin-left-15 margin-bottom-10">
+							<div class="row margin-top-10">
+								<div class="col-md-12 col-sm-12 col-xs-12">
+									<span class="margin-left-neg-10">Project: {{proj.project}}</span>
+								</div>
+							</div>
+
+							<div class="row margin-top-10">
+								<div class="col-md-6 col-sm-12 col-xs-12 ">
+									<span class="margin-left-neg-10">No Of Tasks: {{proj.noOfTask}}</span>
+								</div>
+								<div class="col-md-6 col-sm-12 col-xs-12">
+									<span class="margin-left-neg-10 padding-left-neutralize padding-right-neutralize">Completed: {{proj.noOfCompletedTask}}</span>
+								</div>
+							</div>
+
+							<div class="row margin-top-5">
+								<div class="col-md-6 col-sm-12 col-xs-12 ">
+									<span class="margin-top-15 margin-left-neg-10">Start Date:</span><span>{{proj.startDate}}</span>
+								</div>
+								<div class="col-md-6 col-sm-12 col-xs-12">
+									<span class="margin-top-15 margin-left-neg-10 padding-left-neutralize padding-right-neutralize">End Date:</span><span>{{proj.endDate}}</span>
+								</div>
+							</div>						
+						</div>
+						<div class="col-md-2 col-sm-12 col-xs-12 margin-bottom-10">
+							<label for="priority" class="control-label label-font">Priority</label>
+							<div class="project-priority-div text-align-center">
+								<span class="margin-top-10">{{proj.priority}}</span>
+							</div>
+						</div>
+						<div class="col-md-2 col-sm-12 col-xs-12 margin-bottom-10 padding-left-neutralize">
+							<button type="button" class="btn btn-primary project-form-button" (click)="updateProject(proj)">Update</button>
+							<button type="button" class="btn btn-primary project-form-button" (click)="suspendProject(proj)">Suspend</button>
+						</div>
+					</div>
+					<div class="row padding-right-neutralize">
+						<hr/>
+					</div>
+				</li>
+				
+			</ul>
+		</div>
+		<div class="col-md-3 col-sm-12 col-xs-12"></div>
+	</div>	
+	<button data-toggle="modal" data-target="#searchUserModalWindow" id='searchUserPopupOpener' [hidden]='true'>Open Modal</button>
+</div>
+
+<pm-loading class="text-align-center" [hidden]="!screenLoader"></pm-loading>
+
+<div [hidden]='!techError'>
+	<div class="row margin-top-30">
+		<p class="error-msg text-align-center">Application isnt behaving the way it should. Please try later.</p>
+	</div>
+</div>
+
+<div id="searchUserModalWindow" class="modal" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-body">
+				<input #selectedUsr="ngModel" [(ngModel)]="selectedUser" name="selectedUser" id ="selectedUser" class="form-control" type="text" pattern = "^[a-zA-Z\s]+$" required placeholder="Search..."/>
+				<ul class="list-group margin-top-30" *ngIf='null != userList'>
+					<li *ngFor="let usr of userList | searchFilter : selectedUser : 'userDetails'" class="list-group-item">
+						<a href="javascript:void(0)" (click)="setUser(usr)">{{usr.lname}}, {{usr.fname}}</a>
+					</li>
+					<li *ngIf="(userList | searchFilter : selectedUser : 'userDetails').length === 0" class="margin-top-15"></li>
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id='setUser' class="btn btn-primary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

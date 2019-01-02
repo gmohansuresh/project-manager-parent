@@ -1,0 +1,272 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
+.content-div {
+  background-color: #ffffff;
+  height:auto;
+  min-height: 50px;
+  position: relative;
+  margin: 0 auto;
+  padding:40px;
+  margin-bottom:80px;
+  font-family: monospace;
+}
+
+.navbar-expand-sm .navbar-nav .nav-item .nav-link {
+    color: #000;
+    background-color: none;
+}
+
+.navbar-expand-sm .navbar-nav .nav-item .active{
+    font-weight: 600;
+    color :  #007bff;
+    text-decoration:none;
+}
+
+.button-round {
+    border-radius: 50%;
+}
+
+.navbar-expand-sm .navbar-nav .nav-item a:hover,
+.navbar-expand-sm .navbar-nav .nav-item a:focus {
+     font-weight: 600;
+     text-decoration:none;
+}
+
+.navbar-expand-sm .navbar-nav .nav-item .active > a,
+.navbar-expand-sm .navbar-nav .nav-item .active > a:hover,
+.navbar-expand-sm .navbar-nav .nav-item .active> a:focus {
+     font-weight: 600;
+     text-decoration:none;
+}
+
+.text-align-center {
+    text-align: center;
+}
+
+.text-align-right {
+    text-align: right;
+}
+
+hr {
+    border-top:1px dotted black;
+    width: 100%;
+}
+
+table {
+    width: 100%;
+}
+
+.margin-left-0 {
+    margin-left: 0px;
+}
+
+.margin-left-3 {
+    margin-left: 3px;
+}
+
+.margin-left-5 {
+    margin-left: 5px;
+}
+
+.margin-left-7 {
+    margin-left: 7px;
+}
+
+.margin-left-10 {
+    margin-left: 10px;
+}
+
+.margin-left-15 {
+    margin-left: 15px;
+}
+
+.margin-left-neg-15 {
+    margin-left: 15px;
+}
+
+.margin-left-20 {
+    margin-left: 20px;
+}
+
+.margin-left-25 {
+    margin-left: 25px;
+}
+
+.margin-left-neg-10 {
+    margin-left: -10px;
+}
+
+.margin-left-neg-15 {
+    margin-left: -15px;
+}
+
+.margin-left-neg-18 {
+    margin-left: -18px;
+}
+
+.margin-left-neg-20 {
+    margin-left: -20px;
+}
+
+.margin-left-neg-25 {
+    margin-left: -25px;
+}
+
+.margin-right-5 {
+    margin-right: 5px;
+}
+
+.margin-right-12 {
+    margin-right: 12px;
+}
+
+.margin-right-15 {
+    margin-right: 15px;
+}
+
+.margin-top-5 {
+    margin-top: 5px;
+}
+
+.margin-top-10 {
+    margin-top: 10px;
+}
+
+.margin-top-15 {
+    margin-top: 15px;
+}
+
+.margin-top-20 {
+    margin-top: 20px;
+}
+
+.margin-top-30 {
+    margin-top: 30px;
+}
+
+.margin-top-neg-10 {
+    margin-top: -10px;
+}
+
+.margin-top-neg-15 {
+    margin-top: -15px;
+}
+
+.margin-top-neg-20 {
+    margin-top: -20px;
+}
+
+.margin-bottom-10 {
+    margin-bottom: 10px;
+}
+
+.padding-left-neutralize {
+    padding-left: 0px !important; 
+}
+.padding-right-neutralize {
+    padding-right:0px !important;
+}
+
+.form-button {
+    width: 30%
+}
+
+ul, li {
+  list-style-type: none;
+}
+
+li.borderless {
+    border: 0 none; 
+}
+
+.error-msg {
+    color: red;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 15px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: black;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: black;
+    cursor: pointer;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.loader {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1;
+  width: 150px;
+  height: 150px;
+  margin: -75px 0 0 -75px;
+  border: 16px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 16px solid #3498db;
+  width: 120px;
+  height: 120px;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Add animation to "page content" */
+.animate-bottom {
+  position: relative;
+  -webkit-animation-name: animatebottom;
+  -webkit-animation-duration: 1s;
+  animation-name: animatebottom;
+  animation-duration: 1s
+}
+
+@-webkit-keyframes animatebottom {
+  from { bottom:-100px; opacity:0 } 
+  to { bottom:0px; opacity:1 }
+}
+
+@keyframes animatebottom { 
+  from{ bottom:-100px; opacity:0 } 
+  to{ bottom:0; opacity:1 }
+}
+
+.float-left {
+    text-align: left;
+}

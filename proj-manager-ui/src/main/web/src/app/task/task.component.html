@@ -1,0 +1,113 @@
+<div [hidden]='techError'>
+    <div class="row">
+		<div class="col-md-6 col-sm-12 col-xs-12">
+			<div class="row">
+				<div class="col-md-2 col-sm-12 col-xs-12">
+					<label for="project" class="control-label label-font margin-left-5">Project:</label>
+				</div>
+				<div class="col-md-7 col-sm-12 col-xs-12">		
+					<input #project="ngModel" [(ngModel)]="projectName" name="project" id ="project" class="margin-top-12 margin-bottom-10 form-control" type="text" readonly/>
+				</div>	
+				<div class="col-md-3 col-sm-12 col-xs-12">
+					<button type="button" class="btn btn-default margin-bottom-10" (click)="getProject()">Search</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="col-md-6 col-sm-12 col-xs-12">
+			<div class="row">
+				<div class="col-md-3 col-sm-12 col-xs-12">
+					<label for="sortTask" class="control-label label-font margin-bottom-10">Sort Task By:</label>
+				</div>
+				<div class="col-md-9 col-sm-12 col-xs-12">
+					<button type="button" class="btn margin-bottom-10 mx-1" (click)="sortTask('startDate')">Start Date</button>
+					<button type="button" class="btn margin-bottom-10 mx-1" (click)="sortTask('endDate')">End Date</button>
+					<button type="button" class="btn margin-bottom-10 mx-1" (click)="sortTask('priority')">Priority</button>
+					<button type="button" class="btn margin-bottom-10 mx-1" (click)="sortTask('status')">Completed</button>
+				</div>
+			</div>
+		</div>        
+    </div>
+
+	<div class="row margin-left-25">
+		<hr/>			
+	</div>
+
+	<ul class="list-group" *ngIf='null != taskList'>
+		<li *ngFor="let task of taskList | sortFilter : fieldName : 'taskScreen'" class="list-group-item borderless">
+			<div class="row">
+				<div class="col-md-6 col-sm-12 col-xs-12">
+					<div class="row">
+						<div class="col-md-6 col-sm-12 col-xs-12">
+							<label for="task" class="control-label label-font">Task</label>
+							<div class="task-name-div text-align-center">{{task.task}}</div>
+						</div>
+						<div class="col-md-6 col-sm-12 col-xs-12">
+							<label for="parent" class="control-label label-font">Parent</label>
+							<div class="task-name-div text-align-center">{{task.parentTaskName}}</div>
+						</div>
+					</div>					
+				</div>
+				<div class="col-md-6 col-sm-12 col-xs-12">
+					<div class="row">
+						<div class="col-md-8 col-sm-12 col-xs-12">
+							<div class="row">
+								<div class="col-md-4 col-sm-12 col-xs-12 margin-bottom-10">
+									<label for="task" class="control-label label-font">Priority</label>
+									<div>{{task.priority}}</div>
+								</div>
+								<div class="col-md-4 col-sm-12 col-xs-12 margin-bottom-10">
+									<label for="parent" class="control-label label-font">Start</label>
+									<div>{{task.startDate}}</div>
+								</div>
+								<div class="col-md-4 col-sm-12 col-xs-12 margin-bottom-10">
+									<label for="parent" class="control-label label-font">End</label>
+									<div>{{task.endDate}}</div>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-12 col-xs-12">
+							<button type="button" class="btn btn-primary margin-bottom-10 mx-1" [disabled]="task.status == 'COMPLETED'" (click)="editTask(task)">Edit</button>
+							<button type="button" class="btn btn-primary margin-bottom-10 mx-1" [disabled]="task.status == 'COMPLETED'" (click)="endTask(task)">End Task</button>
+						</div>
+					</div>					
+				</div>				
+			</div>
+			<div class="row margin-left-10">
+				<hr/>			
+			</div>
+		</li>
+	</ul>
+
+	<button data-toggle="modal" data-target="#searchProjectModalWindow" id='searchProjectPopupOpener' [hidden]='true'>Open Modal</button>
+</div>
+
+<pm-loading class="text-align-center" [hidden]="!screenLoader"></pm-loading>
+
+<div [hidden]='!techError'>
+	<div class="row margin-top-30">
+		<p class="error-msg text-align-center">Application isnt behaving the way it should. Please try later.</p>
+	</div>
+</div>
+
+<div id="searchProjectModalWindow" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+			</div>
+			<div class="modal-body">
+				<input #selectedProj="ngModel" [(ngModel)]="selectedProject" name="selectedProject" id ="selectedProject" class="form-control" type="text" pattern = "^[a-zA-Z\s]+$" required placeholder="Search..."/>
+				<ul class="list-group margin-top-30" *ngIf='null != projectList'>
+					<li *ngFor="let proj of projectList | searchFilter : selectedProject : 'projectDetails'" class="list-group-item">
+						<a href="javascript:void(0)" (click)="setProject(proj)">{{proj.project}}</a>
+					</li>
+					
+				</ul>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id='setUser' class="btn btn-primary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>

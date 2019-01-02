@@ -1,0 +1,128 @@
+<pm-loading class="text-align-center" [hidden]="!screenLoader"></pm-loading>
+
+<div [hidden]='techError'>
+    <form #addUserForm = "ngForm" method="post" (ngSubmit)="addUser(user)" novalidate>
+		<div class="row margin-top-10" [class.hasError]="fname.errors && (fname.dirty || fname.touched)">
+			<div class="col-md-2 col-sm-12 col-xs-12">
+				<label for="fname" class="control-label label-font">First Name:</label>
+			</div>
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<input #fname="ngModel" [(ngModel)]="user.fname" name="fname" id ="fname" class="form-control" type="text" pattern = "^[a-zA-Z]+$" required aria-describedby="fnameErrorDiv">
+				<div role="alert" aria-live="assertive" id="fnameErrorDiv" class="error-message-cmn-cls" *ngIf="fname.errors && (fname.dirty || fname.touched)">
+					<span class="fa fa-times"> </span>
+					<span class="error-msg" *ngIf="fname.errors.required">Required field</span>
+					<span class="error-msg" *ngIf="fname.errors.pattern">Please enter only characters.</span>
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-12 col-xs-12"></div>
+		</div>
+
+		<div class="row margin-top-10" [class.hasError]="lname.errors && (lname.dirty || lname.touched)">
+			<div class="col-md-2 col-sm-12 col-xs-12">
+				<label for="lname" class="control-label label-font">Last Name:</label>
+			</div>
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<input #lname="ngModel" [(ngModel)]="user.lname" name="lname" id ="lname" class="form-control" type="text" pattern = "^[a-zA-Z]+$" required aria-describedby="lnameErrorDiv">			
+				<div role="alert" aria-live="assertive" id="lnameErrorDiv" class="error-message-cmn-cls" *ngIf="lname.errors && (lname.dirty || lname.touched)">
+					<span class="fa fa-times"> </span>
+					<span class="error-msg" *ngIf="lname.errors.required">Required field</span>
+					<span class="error-msg" *ngIf="lname.errors.pattern">Please enter only characters.</span>
+				</div>
+			</div>
+			<div class="col-md-6 col-sm-12 col-xs-12"></div>
+		</div>		
+
+		<div class="row margin-top-10" [class.hasError]="empId.errors && (empId.dirty || empId.touched)">
+			<div class="col-md-2 col-sm-12 col-xs-12">
+				<label for="empId" class="control-label label-font">Employee ID:</label>
+			</div>
+			<div class="col-md-4 col-sm-12 col-xs-12">
+				<input #empId="ngModel" [(ngModel)]="user.empId" name="empId" id ="empId" class="form-control" type="text" pattern="^[a-zA-Z0-9]+$" minlength="6" maxlength="6" required aria-describedby="empIdErrorDiv">
+				<div role="alert" aria-live="assertive" id="empIdErrorDiv" class="error-message-cmn-cls" *ngIf="empId.errors && (empId.dirty || empId.touched)">
+					<span class="fa fa-times"> </span>
+					<span class="error-msg" *ngIf="empId.errors.required">Required field</span>
+					<span class="error-msg" *ngIf="empId.errors.pattern">Please enter employee id without any special characters.</span>
+				</div>			
+			</div>
+			<div class="col-md-6 col-sm-12 col-xs-12"></div>
+		</div>
+
+		<div class="row margin-top-10">
+			<div class="col-md-1 col-sm-12 col-xs-12"></div>
+			<div class="col-md-4 col-sm-12 col-xs-12 text-align-right">
+				<button type="submit" class="btn btn-primary margin-right-15" [disabled]="!addUserForm.form.valid && (addUserForm.form.touched || addUserForm.form.untouched)" [hidden]="!isAdd">Add</button>
+				<button type="submit" class="btn btn-primary margin-right-15" [disabled]="!addUserForm.form.valid && (addUserForm.form.touched || addUserForm.form.untouched)" [hidden]="isAdd">Update</button>
+				<button type="button" class="btn btn-default" (click)="reset()">Reset</button>
+			</div>
+			<div class="col-md-6 col-sm-12 col-xs-12"></div>
+		</div>
+	</form>
+	<div class="row margin-top-5">
+		<div class="col-md-6 col-sm-12 col-xs-12">
+			<hr/>
+		</div>
+		<div class="col-md-6 col-sm-12 col-xs-12"></div>
+	</div>
+	
+	<div class="row margin-top-10">
+		<div class="col-md-2 col-sm-12 col-xs-12">
+			<input #searchUser="ngModel" [(ngModel)]="searchText" name="searchText" id ="searchText" class="form-control margin-bottom-10" type="text" required placeholder="Search..."/>
+		</div>
+		<div class="col-md-4 col-sm-12 col-xs-12">
+			<div class="row">
+				<div class="col-md-3 col-sm-12 col-xs-12">
+					<label for="sortUser" class="control-label label-font">Sort By:</label>
+				</div>
+				<div class="col-md-9 col-sm-12 col-xs-12">			
+					<button type="button" class="btn margin-bottom-10 mx-1" (click)="sortUser('fname')">First Name</button>
+					<button type="button" class="btn margin-bottom-10 mx-1" (click)="sortUser('lname')">Last Name</button>
+					<button type="button" class="btn margin-bottom-10 mx-1" (click)="sortUser('id')">Id</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-5 col-sm-12 col-xs-12"></div>
+	</div>
+
+	<div class="row">
+		<div class="col-md-6 col-sm-12 col-xs-12">
+			<ul class="list-group " *ngIf='null != userList'>
+				<li *ngFor="let usr of userList | searchFilter : searchText : 'userDetails' | sortFilter : fieldName : 'userScreen'" class="list-group-item borderless margin-top-neg-10">
+					<div class="row">
+						<div class="col-md-10 col-sm-12 col-xs-12">
+							<div class="row margin-top-10">
+								<div class="col-md-12 col-sm-12 col-xs-12 user-details-div">
+									{{usr.fname}}
+								</div>
+							</div>
+							<div class="row margin-top-10">
+								<div class="col-md-12 col-sm-12 col-xs-12 user-details-div">
+									{{usr.lname}}
+								</div>
+							</div>
+							<div class="row margin-top-10">
+								<div class="col-md-12 col-sm-12 col-xs-12 user-details-div">
+									{{usr.empId}}
+								</div>
+							</div>						
+						</div>
+						<div class="col-md-2 col-sm-12 col-xs-12">
+							<button type="button" class="btn btn-primary margin-top-10 mx-1" (click)="editUser(usr)">Edit</button>
+							<button type="button" class="btn btn-primary margin-top-10 mx-1" (click)="deleteUser(usr)">Delete</button>
+						</div>
+					</div>
+					<div class="row">
+						<hr/>						
+					</div>			
+				</li>
+				
+			</ul>
+		</div>
+		<div class="col-md-6 col-sm-12 col-xs-12"></div>
+	</div>
+</div>
+
+<div [hidden]='!techError'>
+	<div class="row margin-top-30">
+		<p class="error-msg text-align-center">Application isnt behaving the way it should. Please try later.</p>
+	</div>
+</div>

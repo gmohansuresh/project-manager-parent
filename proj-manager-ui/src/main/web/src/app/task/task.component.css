@@ -1,0 +1,9 @@
+.task-name-div {
+    background-color: #D3D3D3;
+    height:auto;
+    min-height: 35px;
+    position: relative;
+    margin: 0 auto;
+    padding:35px;
+    margin-bottom:15px;
+}
