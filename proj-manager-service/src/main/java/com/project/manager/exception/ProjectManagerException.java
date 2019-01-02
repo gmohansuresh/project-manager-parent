@@ -79,12 +79,12 @@ public class ProjectManagerException extends Exception {
 		this.status = status;
 	}
 	
-	/*public ExceptionResponse transformException()
+	public ProjectManagerException transformException()
 	{
-		ExceptionResponse restError = new ExceptionResponse();
+		ProjectManagerException restError = new ProjectManagerException();
 		restError.setErrorCode(this.errorCode);
 		restError.setErrorMessage(this.errorMessage);
 		return restError;
-	}*/
+	}
 	
 }

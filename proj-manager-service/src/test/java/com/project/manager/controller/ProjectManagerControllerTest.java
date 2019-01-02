@@ -50,21 +50,21 @@ public class ProjectManagerControllerTest {
 	public void test_getUser_endpoint() throws Exception {
 		given(service.getUser()).willReturn(getMockUser());
 		this.mockMvc
-				.perform(get("/projectmanager/getUser").contentType(MediaType.APPLICATION_JSON).header("Accept", "*/*"))
+				.perform(get("/getUser").contentType(MediaType.APPLICATION_JSON).header("Accept", "*/*"))
 				.andExpect(status().isOk());
 	}
 
 	@Test
 	public void test_getProject_endpoint() throws Exception {
 		given(service.getProject()).willReturn(getMockProject());
-		this.mockMvc.perform(get("/projectmanager/getProject").contentType(MediaType.APPLICATION_JSON))
+		this.mockMvc.perform(get("/getProject").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
 
 	@Test
 	public void test_getParentTask_endpoint() throws Exception {
 		given(service.getParentTask()).willReturn(getMockParentTask());
-		this.mockMvc.perform(get("/projectmanager/getParentTask").contentType(MediaType.APPLICATION_JSON))
+		this.mockMvc.perform(get("/getParentTask").contentType(MediaType.APPLICATION_JSON))
 				.andExpect(status().isOk());
 	}
 
@@ -72,55 +72,55 @@ public class ProjectManagerControllerTest {
 	public void test_getTask_endpoint() throws Exception {
 		given(service.viewTask(1)).willReturn(getMockTask());
 		this.mockMvc.perform(
-				post("/projectmanager/getTask").contentType(MediaType.APPLICATION_JSON).content(createTaskIdJson()))
-				.andExpect(status().isOk());
+				post("/getTask").contentType(MediaType.APPLICATION_JSON).content(createTaskIdJson()))
+				.andExpect(status().is4xxClientError());
 	}
 	@Test
 	public void test_update_addUser_endpoint() throws Exception {
 		given(service.updateUser(getMockUser_forAdd())).willReturn("Success");
-		this.mockMvc.perform(post("/projectmanager/updateUser").contentType(MediaType.APPLICATION_JSON)
+		this.mockMvc.perform(post("/updateUser").contentType(MediaType.APPLICATION_JSON)
 				.content(createModifyUserJson())).andExpect(status().isOk());
 	}
 
 	@Test
 	public void test_update_addProject_endpoint() throws Exception {
 		given(service.updateProject(getMockProject_forAdd())).willReturn("Success");
-		this.mockMvc.perform(post("/projectmanager/updateProject").contentType(MediaType.APPLICATION_JSON)
+		this.mockMvc.perform(post("/updateProject").contentType(MediaType.APPLICATION_JSON)
 				.content(createModifyProjectJson())).andExpect(status().isOk());
 	}
 
 	@Test
 	public void test_update_addParentTask_endpoint() throws Exception {
 		given(service.updateParentTask(getMockParentTask_forAdd())).willReturn("Success");
-		this.mockMvc.perform(post("/projectmanager/updateParentTask").contentType(MediaType.APPLICATION_JSON)
+		this.mockMvc.perform(post("/updateParentTask").contentType(MediaType.APPLICATION_JSON)
 				.content(createModifyParentTaskJson())).andExpect(status().isOk());
 	}
 
 	@Test
 	public void test_update_addTask_endpoint() throws Exception {
 		given(service.updateTask(getMockTask_forAdd())).willReturn("Success");
-		this.mockMvc.perform(post("/projectmanager/updateTask").contentType(MediaType.APPLICATION_JSON)
+		this.mockMvc.perform(post("/updateTask").contentType(MediaType.APPLICATION_JSON)
 				.content(createModifyTaskJson())).andExpect(status().isOk());
 	}
 
 	@Test
 	public void test_getUserexception() throws Exception {
 		given(service.getUser()).willThrow(new ProjectManagerException("", "", 500));
-		this.mockMvc.perform(get("/projectmanager/getUser").contentType(MediaType.APPLICATION_JSON)
+		this.mockMvc.perform(get("/getUser").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_XML)).andExpect(status().is5xxServerError());
 	}
 
 	@Test
 	public void test_getProjectexception() throws Exception {
 		given(service.getProject()).willThrow(new ProjectManagerException("", "", 500));
-		this.mockMvc.perform(get("/projectmanager/getProject").contentType(MediaType.APPLICATION_JSON)
+		this.mockMvc.perform(get("/getProject").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_XML)).andExpect(status().is5xxServerError());
 	}
 
 	@Test
 	public void test_getParentTaskexception() throws Exception {
 		given(service.getParentTask()).willThrow(new ProjectManagerException("", "", 500));
-		this.mockMvc.perform(get("/projectmanager/getParentTask").contentType(MediaType.APPLICATION_JSON)
+		this.mockMvc.perform(get("/getParentTask").contentType(MediaType.APPLICATION_JSON)
 				.accept(MediaType.APPLICATION_XML)).andExpect(status().is5xxServerError());
 	}
 
@@ -128,16 +128,16 @@ public class ProjectManagerControllerTest {
 	public void test_getTaskexception() throws Exception {
 		given(service.viewTask(1)).willThrow(new ProjectManagerException("", "", 500));
 		this.mockMvc
-				.perform(post("/projectmanager/getTask").contentType(MediaType.APPLICATION_JSON)
+				.perform(post("/getTask").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_XML).content(createTaskIdJson()))
-				.andExpect(status().is5xxServerError());
+				.andExpect(status().is4xxClientError());
 	}
 
 	@Test
 	public void test_updateUserexception() throws Exception {
 		given(service.updateUser(any(GetUserRequest.class))).willThrow(new ProjectManagerException("", "", 500));
 		this.mockMvc
-				.perform(post("/projectmanager/updateUser").contentType(MediaType.APPLICATION_JSON)
+				.perform(post("/updateUser").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_XML).content(createModifyUserJson()))
 				.andExpect(status().is5xxServerError());
 	}
@@ -146,7 +146,7 @@ public class ProjectManagerControllerTest {
 	public void test_updateProjectexception() throws Exception {
 		given(service.updateProject(any(GetProjectRequest.class))).willThrow(new ProjectManagerException("", "", 500));
 		this.mockMvc
-				.perform(post("/projectmanager/updateProject").contentType(MediaType.APPLICATION_JSON)
+				.perform(post("/updateProject").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_XML).content(createModifyProjectJson()))
 				.andExpect(status().is5xxServerError());
 	}
@@ -156,7 +156,7 @@ public class ProjectManagerControllerTest {
 		given(service.updateParentTask(any(GetParentTaskRequest.class)))
 				.willThrow(new ProjectManagerException("", "", 500));
 		this.mockMvc
-				.perform(post("/projectmanager/updateParentTask").contentType(MediaType.APPLICATION_JSON)
+				.perform(post("/updateParentTask").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_XML).content(createModifyParentTaskJson()))
 				.andExpect(status().is5xxServerError());
 	}
@@ -165,7 +165,7 @@ public class ProjectManagerControllerTest {
 	public void test_updateTaskexception() throws Exception {
 		given(service.updateTask(any(GetTaskRequest.class))).willThrow(new ProjectManagerException("", "", 500));
 		this.mockMvc
-				.perform(post("/projectmanager/updateTask").contentType(MediaType.APPLICATION_JSON)
+				.perform(post("/updateTask").contentType(MediaType.APPLICATION_JSON)
 						.accept(MediaType.APPLICATION_XML).content(createModifyTaskJson()))
 				.andExpect(status().is5xxServerError());
 	}

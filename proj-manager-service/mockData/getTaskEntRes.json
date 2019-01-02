@@ -1,0 +1,25 @@
+{
+	"taskId" : 1,
+	"parentTaskEnt" : {
+		"parentId" : 1,
+		"parentTask" : "parentTask"
+	},
+	"projectEnt" : {
+		"projectId" : 1,
+		"project" : "project V",
+		"startDate" : "2018-11-22",
+		"endDate" : "2018-11-23",
+		"userEnt" : {
+			"userId" : 1,
+			"fname" : "fname",
+			"lname" : "lname",
+			"empId" : "123456"
+		},
+		"priority" : 5
+	},
+	"task" : "task",
+	"startDate" : "2018-11-22",
+	"endDate" : "2018-11-23",
+	"priority" : 5,
+	"status" : "NEW"
+}

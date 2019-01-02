@@ -1,0 +1,8 @@
+{
+	"action" : "ADD",
+	"userVO" : {
+		"fname" : "Mohan",
+		"lname" : "A",
+		"empId" : "98765"
+	}
+}

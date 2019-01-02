@@ -1,0 +1,6 @@
+{
+	"action" : "DELETE",
+	"userVO" : {
+		"userId" : 1
+	}
+}

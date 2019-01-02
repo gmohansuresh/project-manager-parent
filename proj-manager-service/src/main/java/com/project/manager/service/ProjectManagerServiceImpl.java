@@ -85,7 +85,6 @@ public class ProjectManagerServiceImpl implements ProjectManagerService, Project
 	        getTaskResponse.setTaskVO(taskVOList);
 	        getTaskResponse.setStatus("Success");
 		} catch(Exception e) {
-			logger.error("Error - ProjectManagerServiceImpl viewTask : " + e);
 			throw new ProjectManagerException(TECH_ERROR_CODE, TECH_ERROR_MESSAGE, STATUS_500);
 		}
 		return getTaskResponse;
@@ -114,7 +113,6 @@ public class ProjectManagerServiceImpl implements ProjectManagerService, Project
 	        getParentTaskResponse.setParentTaskVO(parentTaskVOList);
 	        getParentTaskResponse.setStatus("Success");
 		} catch(Exception e) {
-			logger.error("Error - ProjectManagerServiceImpl getParentTask : " + e);
 			throw new ProjectManagerException(TECH_ERROR_CODE, TECH_ERROR_MESSAGE, STATUS_500);
 		}
 		return getParentTaskResponse;
@@ -157,7 +155,6 @@ public class ProjectManagerServiceImpl implements ProjectManagerService, Project
 			getProjectResponse.setProjectVO(projectVOList);
 			getProjectResponse.setStatus("Success");
 		} catch(Exception e) {
-			logger.error("Error - ProjectManagerServiceImpl getProject : " + e);
 			throw new ProjectManagerException(TECH_ERROR_CODE, TECH_ERROR_MESSAGE, STATUS_500);
 		}
 		return getProjectResponse;
@@ -186,7 +183,6 @@ public class ProjectManagerServiceImpl implements ProjectManagerService, Project
 			getUserResponse.setUserVO(userVOList);
 			getUserResponse.setStatus("Success");
 		} catch(Exception e) {
-			logger.error("Error - ProjectManagerServiceImpl getUser : " + e);
 			throw new ProjectManagerException(TECH_ERROR_CODE, TECH_ERROR_MESSAGE, STATUS_500);
 		}
 		return getUserResponse;
@@ -212,7 +208,6 @@ public class ProjectManagerServiceImpl implements ProjectManagerService, Project
 			taskRepository.save(taskEnt);
 			status = "Success";
 		} catch(Exception e) {
-			logger.error("Error - ProjectManagerServiceImpl updateTask : " + e);
 			throw new ProjectManagerException(TECH_ERROR_CODE, TECH_ERROR_MESSAGE, STATUS_500);
 		}
 		return status;
@@ -243,7 +238,6 @@ public class ProjectManagerServiceImpl implements ProjectManagerService, Project
 			
 			status = "Success";
 		} catch(Exception e) {
-			logger.error("Error - ProjectManagerServiceImpl updateParentTask : " + e);
 			throw new ProjectManagerException(TECH_ERROR_CODE, TECH_ERROR_MESSAGE, STATUS_500);
 		}
 		return status;
@@ -281,7 +275,6 @@ public class ProjectManagerServiceImpl implements ProjectManagerService, Project
 			}
 			status = "Success";
 		} catch(Exception e) {
-			logger.error("Error - ProjectManagerServiceImpl updateProject : " + e);
 			throw new ProjectManagerException(TECH_ERROR_CODE, TECH_ERROR_MESSAGE, STATUS_500);
 		}
 		return status;
@@ -304,7 +297,6 @@ public class ProjectManagerServiceImpl implements ProjectManagerService, Project
 				status = "Success";
 			}
 		} catch(Exception e) {
-			logger.error("Error - ProjectManagerServiceImpl updateUser : " + e);
 			throw new ProjectManagerException(TECH_ERROR_CODE, TECH_ERROR_MESSAGE, STATUS_500);
 		}
 		return status;
@@ -315,7 +307,6 @@ public class ProjectManagerServiceImpl implements ProjectManagerService, Project
 		try {
 			taskEntList = taskRepository.findByProjectId(projectId);
 		} catch(Exception e) {
-			logger.error("Error - ProjectManagerServiceImpl getTaskByProjectId : " + e);
 			throw new ProjectManagerException(TECH_ERROR_CODE, TECH_ERROR_MESSAGE, STATUS_500);
 		}
 		return taskEntList;
@@ -327,7 +318,6 @@ public class ProjectManagerServiceImpl implements ProjectManagerService, Project
 			taskRepository.deleteByProjectId(projectId);
 			flag = true;
 		} catch(Exception e) {
-			logger.error("Error - ProjectManagerServiceImpl deleteTask : " + e);
 			throw new ProjectManagerException(TECH_ERROR_CODE, TECH_ERROR_MESSAGE, STATUS_500);
 		}
 		return flag;
@@ -339,7 +329,6 @@ public class ProjectManagerServiceImpl implements ProjectManagerService, Project
 			parentTaskRepository.deleteByProjectId(projectId);
 			flag = true;
 		} catch(Exception e) {
-			logger.error("Error - ProjectManagerServiceImpl deleteParentTask : " + e);
 			throw new ProjectManagerException(TECH_ERROR_CODE, TECH_ERROR_MESSAGE, STATUS_500);
 		}
 		return flag;
@@ -351,7 +340,6 @@ public class ProjectManagerServiceImpl implements ProjectManagerService, Project
 			projectRepository.deleteByUserId(userId);
 			flag = true;
 		} catch(Exception e) {
-			logger.error("Error - ProjectManagerServiceImpl deleteProject : " + e);
 			throw new ProjectManagerException(TECH_ERROR_CODE, TECH_ERROR_MESSAGE, STATUS_500);
 		}
 		return flag;

@@ -1,0 +1,6 @@
+{
+	"action" : "DELETE",
+	"parentTaskVO" : {
+		"parentId" : 1
+	}
+}

@@ -1,0 +1,13 @@
+{
+	"projectId" : 1,
+	"project" : "project G",
+	"startDate" : "2018-11-22",
+	"endDate" : "2018-11-23",
+	"userEnt" : {
+		"userId" : 1,
+		"fname" : "fname",
+		"lname" : "lname",
+		"empId" : "34562352"
+	},
+	"priority" : 5
+}
