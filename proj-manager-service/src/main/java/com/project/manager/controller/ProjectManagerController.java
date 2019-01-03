@@ -36,7 +36,7 @@ public class ProjectManagerController implements ProjectManagerConstants {
 	
 	@RequestMapping(value = "/viewTask", method = RequestMethod.POST, headers = "Accept=*/*", consumes = {
 			"application/json; charset=UTF-8"}, produces = {"application/json; charset=UTF-8"})
-	public @ResponseBody GetTaskResponse viewTask(@RequestBody @Valid GetTaskRequest request) throws ProjectManagerException {
+	public @ResponseBody GetTaskResponse viewTaskDetails(@RequestBody @Valid GetTaskRequest request) throws ProjectManagerException {
 		GetTaskResponse getTaskResponse = new GetTaskResponse();
 		try {
 			getTaskResponse = projectManagerService.viewTask(request.getTaskVO().getProjectId());
@@ -48,7 +48,7 @@ public class ProjectManagerController implements ProjectManagerConstants {
 	}
 	
 	@RequestMapping(value = "/getParentTask", method = RequestMethod.GET, headers = "Accept=*/*", produces = {"application/json; charset=UTF-8"})
-	public @ResponseBody GetParentTaskResponse getParentTask() throws ProjectManagerException {
+	public @ResponseBody GetParentTaskResponse getParentTaskdetails() throws ProjectManagerException {
 		GetParentTaskResponse getParentTaskResponse = new GetParentTaskResponse();
 		try {
 			getParentTaskResponse = projectManagerService.getParentTask();
@@ -60,7 +60,7 @@ public class ProjectManagerController implements ProjectManagerConstants {
 	}
 
 	@RequestMapping(value = "/getProject", method = RequestMethod.GET, headers = "Accept=*/*", produces = {"application/json; charset=UTF-8"})
-	public @ResponseBody GetProjectResponse getProject() throws ProjectManagerException {
+	public @ResponseBody GetProjectResponse getProjectdetails() throws ProjectManagerException {
 		GetProjectResponse getProjectResponse = new GetProjectResponse();
 		try {
 			getProjectResponse = projectManagerService.getProject();
